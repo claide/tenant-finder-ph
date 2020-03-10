@@ -13,4 +13,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::apiResource('/user', 'UserController');
+
+Route::prefix('v1')->group(function () {
+    Route::apiResource('/user', 'Api\v1\UserController')
+        ->only(['show', 'destroy', 'update', 'store']);
+
+    Route::apiResource('/user', 'Api\v1\UserController')
+        ->only(['index']);
+});
+
+Route::prefix('v2')->group(function () {
+    Route::apiResource('/user', 'Api\v2\UserController')
+        ->only(['show']);
+});
